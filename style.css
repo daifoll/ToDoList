@@ -1,0 +1,200 @@
+/*Обнуляем стили*/
+*, *::after, *::before{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html, body{
+    max-height: 100%;
+}
+ul{
+    list-style: none;
+}
+/*BODY*/
+body{
+    background: rgb(65,60,149);
+    background: linear-gradient(90deg, rgba(65,60,149,1) 0%, rgba(122,122,200,1) 100%);
+    font-family: 'Comfortaa', sans-serif;
+}
+
+/*CONTAINER*/
+.container{
+    max-width: 600px;
+    padding: 150px 20px 20px 20px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*TODO*/
+.todo{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.wrapper{
+    margin-top: 60px;
+    width: 100%;
+    height: auto;
+}
+
+#todo__form{
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+}
+.todo__header{
+    width: 100%;
+    font-family: 'Comfortaa', sans-serif;
+    display: inline-block;
+    padding: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    text-align: center;
+    font-size: 40px;
+}
+
+/*INPUT*/
+.todo__input{
+    height: 60px;
+    width: 73%;
+    font-size: 20px;
+    border: 0;
+    padding: 5px;
+}
+.add__btn{
+    font-size: 20px;
+    border: 0;
+    background-color: white;
+    width: 25%;
+}
+
+/*TODO LIST*/
+.todo__list{
+    margin-top: 60px;
+    margin-bottom: 70px;
+    width: 100%;
+    word-wrap: break-word;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.list__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding: 20px;
+    font-size: 30px;
+    background-color: #fff;
+    word-break: break-all;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.fa-check,
+.fa-trash,
+.fa-edit{
+    pointer-events: none;
+}
+
+.confirmBtn{
+    border: 0;
+    background-color: #29a603;
+    border: 2px solid white;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 25px;
+    transition: all  0.1s ease;
+}
+.confirmBtn:hover{
+    background-color: white;
+    color: #29a603;
+    border: 2px solid #29a603
+}
+
+.trashBtn{
+    border: 0;
+    background-color: lightcoral;
+    border: 2px solid white;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 25px;
+    transition: all  0.1s ease;
+}
+.editBtn{
+    border: 0;
+    background-color: rgb(90, 89, 4);
+    border: 2px solid white;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 25px;
+    transition: all  0.1s ease;
+}
+.editBtn:hover{
+    background-color: white;
+    color: rgb(90, 89, 4);
+    border: 2px solid rgb(90, 89, 4);
+}
+.trashBtn:hover{
+    background-color: white;
+    color: lightcoral;
+    border: 2px solid lightcoral;
+}
+
+
+.performTask{
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.fall{
+    transform: translateY(100px) rotate(15deg);
+    opacity: 0;
+}
+
+.clearAllBtn{
+    background-color: #fff;
+    border: 0;
+    cursor: pointer;
+    transition: all  0.3s ease;
+    font-size: 25px;
+    flex-grow: 2;
+
+    
+}
+
+.select{
+    background-color: #fff;
+    border: 0;
+    margin-left: 10px;
+    font-size: 25px;
+    flex-grow: 2;
+    
+}
+.todo__bottom{
+    display: flex;
+    justify-content: flex-start;
+    height: 60px;
+}
+
+.editInput{
+    position: absolute;
+    left: 0;
+    height: 80%;
+    font-size: 25px;
+    background-color: rgb(218, 214, 214);
+    border: 0;
+}
