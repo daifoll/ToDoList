@@ -84,10 +84,28 @@ function checkTask(event){
         let todoParent = todo.parentNode
         
         if(!document.querySelector('.editInput')){
-        let editInput = document.createElement('input')
-        editInput.value = todo.parentNode.innerText
-        editInput.classList.add('editInput')
-        todo.parentNode.append(editInput)
+            // Создаем поле для редактирования
+            let editInput = document.createElement('input')
+            editInput.value = todo.parentNode.innerText
+            todoParent.childNodes[0].remove()
+            editInput.classList.add('editInput')
+            editInput.setAttribute('maxlength', '84')
+            todo.parentNode.append(editInput)
+            
+            // Создаём кнопку подтверждения редактирования
+            let confirmEditBtn = document.createElement('button')
+            confirmEditBtn.classList.add('confirmEditBtn')
+            confirmEditBtn.innerHTML = '<i class = "fas fa-check"></i>'
+            todo.parentNode.append(confirmEditBtn)
+            
+            // Удаляем основные кнопки интерфейса
+            let confirmBtn = document.querySelector('.confirmBtn')
+            let trashBtn = document.querySelector('.trashBtn')
+            let editBtn = document.querySelector('.editBtn')
+
+            confirmBtn.remove();
+            trashBtn.remove()
+            editBtn.remove();
         }
 
         //ФУНКЦИЯ РЕДАКТИРОВАНИЯ
@@ -230,10 +248,52 @@ function deleteTasks(task){
 
 function editTasks(todoParent){
     let edit = document.querySelector('.editInput')
-    
+    let confirmEditBtn = document.querySelector('.confirmEditBtn')
+
+    // Изменяем задачу по клику
+    confirmEditBtn.addEventListener('click', function(event){
+        if(edit.value == '') return
+            // Изменяем значение текста задачи на нужное
+            todoParent.innerText = edit.value
+            
+            //После добавления текста, заново генирируем кнопки
+            
+            //Создаём кнопку подтверждения выполнения задачи
+            let confirm = document.createElement('button')
+            confirm.classList.add('confirmBtn')
+            confirm.innerHTML = '<i class = "fas fa-check"></i>'
+
+
+            //Создаем кнопку удаления
+            let trash = document.createElement('button')
+            trash.classList.add('trashBtn')
+            trash.innerHTML = '<i class="fas fa-trash"></i>'
+
+            //Создаём кнопку редактирования
+            let editBtn = document.createElement('button')
+            editBtn.classList.add('editBtn')
+            editBtn.innerHTML = '<i class="fas fa-edit"></i>'
+
+
+            let buttonsDiv = document.createElement('div')
+            buttonsDiv.classList.add('buttonsDiv')
+            todoParent.append(buttonsDiv)
+
+            buttonsDiv.append(confirm)
+            buttonsDiv.append(editBtn)
+            buttonsDiv.append(trash)
+
+            edit.remove()
+
+            //Сохраняем изменения в local.storage
+            checkConfirm(todoParent)
+    })
+    // Изменяем задачу по кнопке
     edit.addEventListener('keyup', function(event){
         if(event.key == 'Enter'){
-            //Изменяем значение текста задачи на нужное
+            if(edit.value == '') return
+            
+            // Изменяем значение текста задачи на нужное
             todoParent.innerText = edit.value
             
             //После добавления текста, заново генирируем кнопки
