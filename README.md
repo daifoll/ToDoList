@@ -17,4 +17,4 @@
 </ul>
 <br>
 
-<a href = "https://daifoll.github.io/ToDoList/">ОТКРЫТЬ ПРОЕКТ</a>
+<a href = "https://daifoll.github.io/ToDoList/" target = "_blank">ОТКРЫТЬ ПРОЕКТ</a>
