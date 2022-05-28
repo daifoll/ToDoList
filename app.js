@@ -1,4 +1,4 @@
-// КОНСТАНТЫ
+/* =================== КОНСТАНТЫ =================== */
 const form = document.querySelector('#todo__form')
 const input = document.querySelector('.todo__input')
 const addBtn = document.querySelector('.add__btn')
@@ -7,14 +7,16 @@ const wrapper = document.querySelector('.wrapper')
 const clearAllBtn = document.querySelector('.clearAllBtn')
 const select = document.querySelector('.select')
 
-// EVENTS
+/* =================== EVENTS =================== */
 document.addEventListener('DOMContentLoaded', getTasks)
 addBtn.addEventListener('click', addTask)
 toDoList.addEventListener('click', checkTask)
 clearAllBtn.addEventListener('click', clearBtn)
 select.addEventListener('change', filter)
 
-// ФУНКЦИИ
+/* =================== ФУНКЦИИ =================== */
+
+// Фукнция добавления (создания) задачи
 function addTask(event){
     event.preventDefault()
 
@@ -59,6 +61,7 @@ function addTask(event){
 
 }
 
+// Фукнция отметки выполненной задачи
 function checkTask(event){
     const item  = event.target
 
@@ -70,10 +73,28 @@ function checkTask(event){
         //Зачёркиваем выполнения задания относительно блока с кнопками - confirmParent
         todo.parentNode.classList.toggle('performTask')
 
+        if(todo.parentNode.classList.contains('performTask')){
+            // Блокируем основные кнопки
+            let editBtn = todo.querySelector('.editBtn')
+            let trashBtn = todo.querySelector('.trashBtn')
+
+            editBtn.disabled = true
+            trashBtn.disabled = true
+        }else{
+            // Разблокируем основные кнопки
+            let editBtn = todo.querySelector('.editBtn')
+            let trashBtn = todo.querySelector('.trashBtn')
+
+
+            editBtn.disabled = false
+            trashBtn.disabled = false
+        }
+        
+
+
         let todoNode = todo.parentNode
-
-        checkConfirm(todoNode)
-
+        let todoParentLastCount = todo.parentNode.innerText
+        editLocalStorage(todoParentLastCount, todoNode)
 
     }
 
@@ -82,32 +103,34 @@ function checkTask(event){
         //Обертка кнопок подтверждения и удаления
         let todo = item.parentNode
         let todoParent = todo.parentNode
-        
         if(!document.querySelector('.editInput')){
-            // Создаем поле для редактирования
             let editInput = document.createElement('input')
+            editInput.setAttribute('maxLength', '64')
             editInput.value = todo.parentNode.innerText
             todoParent.childNodes[0].remove()
             editInput.classList.add('editInput')
-            editInput.setAttribute('maxlength', '84')
             todo.parentNode.append(editInput)
-            
-            // Создаём кнопку подтверждения редактирования
+
+            // Создаём кнопку для подтверждения редактирования
             let confirmEditBtn = document.createElement('button')
             confirmEditBtn.classList.add('confirmEditBtn')
             confirmEditBtn.innerHTML = '<i class = "fas fa-check"></i>'
-            todo.parentNode.append(confirmEditBtn)
-            
+            todo.append(confirmEditBtn)
+
+
             // Удаляем основные кнопки интерфейса
-            let confirmBtn = document.querySelector('.confirmBtn')
-            let trashBtn = document.querySelector('.trashBtn')
-            let editBtn = document.querySelector('.editBtn')
+            let confirmBtn = todo.querySelector('.confirmBtn')
+            let trashBtn = todo.querySelector('.trashBtn')
+            let editBtn = todo.querySelector('.editBtn')
 
-            confirmBtn.remove();
+
+            confirmBtn.remove()
             trashBtn.remove()
-            editBtn.remove();
+            editBtn.remove()
+        }else{
+            return
         }
-
+        
         //ФУНКЦИЯ РЕДАКТИРОВАНИЯ
         editTasks(todoParent)
         
@@ -127,6 +150,7 @@ function checkTask(event){
     }
 }
 
+// Функция кнопки очистки задач (Clear All)
 function clearBtn(){
         while(toDoList.lastChild){
                 toDoList.lastChild.remove()
@@ -161,6 +185,8 @@ function filter(event){
 
 }
 
+
+// Функция сохранения (добавления) задач в localStorage
 function saveLocalStorage(task){
     let tasks;
 
@@ -175,7 +201,7 @@ function saveLocalStorage(task){
 
 }
 
-//Генерируем сохраенные задачи на странице из local.storage
+//Функция генерирации сохраенных задач на странице из local.storage
 function getTasks(){
     let tasks;
 
@@ -230,7 +256,7 @@ function getTasks(){
     })
 }
 
-
+// Фукнция удаления задач по кнопке (delete)
 function deleteTasks(task){
     let tasks;
 
@@ -242,12 +268,15 @@ function deleteTasks(task){
     }
 
     tasks.splice(tasks.indexOf(task), 1)
-    console.log(tasks)
+
     localStorage.setItem('tasks', JSON.stringify(tasks))
 }
 
+
+// Функция реадктирования задач
 function editTasks(todoParent){
-    let edit = document.querySelector('.editInput')
+    let edit = todoParent.querySelector('.editInput')
+    let todoParentLastCount = todoParent.innerText;
     let confirmEditBtn = document.querySelector('.confirmEditBtn')
 
     // Изменяем задачу по клику
@@ -286,14 +315,13 @@ function editTasks(todoParent){
             edit.remove()
 
             //Сохраняем изменения в local.storage
-            checkConfirm(todoParent)
+            editLocalStorage(todoParentLastCount, todoParent)
     })
+    
     // Изменяем задачу по кнопке
     edit.addEventListener('keyup', function(event){
         if(event.key == 'Enter'){
-            if(edit.value == '') return
-            
-            // Изменяем значение текста задачи на нужное
+            //Изменяем значение текста задачи на нужное
             todoParent.innerText = edit.value
             
             //После добавления текста, заново генирируем кнопки
@@ -325,15 +353,18 @@ function editTasks(todoParent){
 
             edit.remove()
 
+            
             //Сохраняем изменения в local.storage
-            checkConfirm(todoParent)
+            editLocalStorage(todoParentLastCount, todoParent)
         }
             
     })
 
 }
 
-function checkConfirm(task){
+
+// Фукнция редактирования localStorage при изменении задачи
+function editLocalStorage(todoParentLastCount, task){
     let tasks;
     let mapTasks;
     if(localStorage.getItem('tasks') === null){
@@ -341,16 +372,15 @@ function checkConfirm(task){
     
     }else{
         tasks = JSON.parse(localStorage.getItem('tasks'))
-    }
 
-    // tasks.splice(tasks.indexOf(task), 1)
-    mapTasks = tasks.map(function(item, index){
-        if(task.innerText == tasks[index][0]){
-            return tasks[index] = [[task.innerText],[task.classList[1]]]
-        }else{
-            return tasks[index] = [[task.innerText],[null]]
-        }
-    })
-    localStorage.setItem('tasks', JSON.stringify(mapTasks))
-    console.log(task.innerText)
+        mapTasks = tasks.map((item, index) =>{
+            if(todoParentLastCount == tasks[index][0][0]){
+                return tasks[index] = [[task.innerText],[task.classList[1]]]
+            }else{
+                return tasks[index]
+            }
+        })
+
+        localStorage.setItem('tasks', JSON.stringify(mapTasks))
+    }
 }

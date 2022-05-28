@@ -6,9 +6,8 @@
 }
 
 html, body{
-    min-height: -webkit-fill-available;
+    /* min-height: -webkit-fill-available; */
     font-family: sans-serif;
-    overflow: scroll;
     
 }
 
@@ -59,7 +58,7 @@ body{
 
 }
 
-.wrapper{
+.todo__wrapper{
     margin-top: 60px;
     width: 100%;
     height: auto;
@@ -128,9 +127,11 @@ body{
     box-shadow: 4px 4px 28px -7px rgba(13, 117, 236, 0.19);
 }
 
+
 .buttonsDiv{
     display: flex;
-    margin-left: 20px;
+    margin-left: 30px;
+        order: 2;
 }
 
 @media screen and (max-width: 580px) {
@@ -315,8 +316,9 @@ body{
 }
 
 .editInput{
-    position: absolute;
-    left: 0;
+    /* position: absolute; */
+    /* left: 0; */
+    order: 1;
     height: 80%;
     font-size: 25px;
     background-color: #3a3a3a;
@@ -326,6 +328,13 @@ body{
     border: 0;
     width: 70%;
     padding: 20px
+}
+
+@media screen and (max-width: 580px) {
+    .editInput{
+        height: 30%;
+        left: 20px;
+    }
 }
 .confirmEditBtn{
     border: 0;
@@ -344,6 +353,13 @@ body{
     border: 2px solid #0d75ec;
 }
 
+@media screen and (max-width: 580px) {
+    .confirmEditBtn{
+        margin-top: 20px;
+    }
+}
+
+
 /*ОБЩИЕ МЕДИА ЗАПРОСЫ*/
 @media screen and (max-width: 1024px){
     .container{
@@ -351,39 +367,65 @@ body{
     }
 }
 
-@media screen and (device-width: 1280px){
-    .container{
-        margin-left: 4%;
-        padding: 20px;
-    }
-}
-
-/* @media screen and (device-height: 915px){
-    .container{
-        padding-bottom: 200px;
-    }
-} */
-
-@media screen and (device-height: 1180px){
+@media screen and (max-height: 1180px){
     .container{
         padding-bottom: 250px;
     }
 }
 
-@media screen and (device-height: 1024px){
+@media screen and (max-height: 1024px){
+    .todo__list{
+        margin-bottom: 40px;
+    }
     .container{
         padding-bottom: 300px;
     }
 }
 
-@media screen and (device-height: 1368px){
-    .container{
-        padding-bottom: 200px;
+/* iPad Air*/
+
+@media screen and (device-height: 1180px){
+    .todo__list{
+        margin-bottom: 30px;
+    }
+    .todo__wrapper{
+        min-height: -webkit-fill-available;
+        height: 100%;
     }
 }
 
-@media screen and (max-height: 915px){
-    .wrapper{
-        padding-bottom: 150px;
+/* iPad Mini*/
+
+@media screen and (device-height: 1024px){
+    .todo__wrapper{
+        padding-bottom: 100px;
     }
 }
+
+
+@media screen and (max-height: 1368px){
+    .container{
+        padding-bottom: 180px;
+    }
+}
+
+
+/* iPad Air*/
+
+/* @media screen and (device-height: 1368px){
+    .todo__list{
+        margin-bottom: 30px;
+    }
+    .todo__wrapper{
+        height: 170vh;
+    }
+} */
+
+
+@media screen and (max-height: 915px){
+    .todo__list{
+        margin-bottom: 30px;
+    }
+}
+
+
