@@ -3,7 +3,7 @@ const form = document.querySelector('#todo__form')
 const input = document.querySelector('.todo__input')
 const addBtn = document.querySelector('.add__btn')
 const toDoList = document.querySelector('.todo__list')
-const wrapper = document.querySelector('.wrapper')
+const wrapper = document.querySelector('.todo__wrapper')
 const clearAllBtn = document.querySelector('.clearAllBtn')
 const select = document.querySelector('.select')
 
@@ -94,6 +94,7 @@ function checkTask(event){
 
         let todoNode = todo.parentNode
         let todoParentLastCount = todo.parentNode.innerText
+        
         editLocalStorage(todoParentLastCount, todoNode)
 
     }
@@ -276,7 +277,7 @@ function deleteTasks(task){
 // Функция реадктирования задач
 function editTasks(todoParent){
     let edit = todoParent.querySelector('.editInput')
-    let todoParentLastCount = todoParent.innerText;
+    let todoParentLastCount = edit.value;
     let confirmEditBtn = document.querySelector('.confirmEditBtn')
 
     // Изменяем задачу по клику
