@@ -5,7 +5,7 @@
  <h3>Стек:</h3>
   <li>HTML</li>
   <li>CSS</li>
-  <li>JS</li>
+  <li>JavaScript</li>
   <br>
   <h3>Что реализовано:</h3>
   <li>Добавление новой задачи</li>
